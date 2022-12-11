@@ -15,3 +15,25 @@
  *  G. If access token is rejected, send refresh token to auth server to get fresh set
  */
 
+/**
+ * @param {string} clientHost
+ * @param {string} clientPort
+ */
+export function generateRedirectURL(clientHost, clientPort) {
+    return `${clientHost}:${clientPort}/auth/callback`
+}
+
+
+/**
+ * @param {string} clientId
+ * @param {string} redirectURL
+ */
+export function generateAuthRequestQuery(clientId, redirectURL) {
+    const encodedParams = {
+        response_type: 'code',
+        client_id: encodeURIComponent(clientId),
+        redirect_uri: encodeURIComponent(redirectURL)
+    }
+
+    return { encodedParams }
+}
