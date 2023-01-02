@@ -1,6 +1,12 @@
+import bunyan from 'bunyan';
 import config from 'config'
 import QueryString from "qs";
 import { generateAuthRequestQuery, generateRedirectURL } from "../auth/oauth2.js";
+
+const log = bunyan.createLogger({
+    name: config.get("app.name"),
+    serializers: bunyan.stdSerializers,
+  });
 
 /**
  * 
@@ -23,31 +29,31 @@ function shiftPath(path) {
 export async function routesAuth(pathParts, query) {
     switch (pathParts[0]) {
         case 'login':
-            console.info('Login')
+            log.debug('Login')
             break;
 
         case 'callback':
-            console.info('Callback')
+            log.debug('Callback')
             break
 
         default:
             return;
     }
 
-    console.debug(pathParts)
-    console.debug(query)
+    log.debug(pathParts)
+    log.debug(query)
     const redirectURL = generateRedirectURL(config.get("web.host"), config.get("web.port"))
     const { encodedParams } = generateAuthRequestQuery(config.get("oauth.client_key"), `https://${redirectURL}`)
-    console.dir(encodedParams)
+    log.debug(JSON.stringify(encodedParams))
 
 }
 
 
 /**
  *
- * @param {import("express-serve-static-core").Request} req
- * @param {import("express-serve-static-core").Response} res
- * @param {import("express-serve-static-core").RequestHandler} next
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
  */
 
 export async function oauthMiddleware(req, res, next) {
