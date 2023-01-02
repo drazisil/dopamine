@@ -1,6 +1,6 @@
+import config from 'config'
 import QueryString from "qs";
 import { generateAuthRequestQuery, generateRedirectURL } from "../auth/oauth2.js";
-import { Config } from "../config/index.js";
 
 /**
  * 
@@ -36,8 +36,8 @@ export async function routesAuth(pathParts, query) {
 
     console.debug(pathParts)
     console.debug(query)
-    const redirectURL = generateRedirectURL(Config.WebHost, Config.WebPort)
-    const { encodedParams } = generateAuthRequestQuery(Config.OAuthClientKey, `https://${redirectURL}`)
+    const redirectURL = generateRedirectURL(config.get("web.host"), config.get("web.port"))
+    const { encodedParams } = generateAuthRequestQuery(config.get("oauth.client_key"), `https://${redirectURL}`)
     console.dir(encodedParams)
 
 }
