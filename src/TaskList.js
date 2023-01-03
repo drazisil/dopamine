@@ -19,7 +19,7 @@ export class TaskList {
      * @param {number} index - index to add task at
      */
     _addTaskAtIndex(tasks, task, index) {
-        this.tasksToDo.splice(index, 0, task)
+        tasks.splice(index, 0, task)
     }
 
     /**
@@ -100,6 +100,7 @@ export class TaskList {
             this.tasksToDo.splice(taskIndex, 1)
         }
         // Add task to done line
+        task.done = true
         this.tasksDone.push(task)
     }
 }

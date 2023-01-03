@@ -1,5 +1,6 @@
-node_modules
 *.db
 *.log
 .env
 config/*
+coverage
+node_modules
