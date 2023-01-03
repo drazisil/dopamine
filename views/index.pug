@@ -1,6 +1,18 @@
+doctype html
 html
   head
-    title= title
+    title Dopamine 
+        if typeof pageTitle !== "undefined"
+            | -
+            | #{pageTitle}
   body
     h1= message
-    h2=countDone
+    if countDone > 0
+        h2 You have completed ${countDone} tasks!
+    else 
+        h2 Feeling productive? 
+        | Let's
+        |
+        a(href='/next') get a new task!
+    if task
+        h3 ${task}
