@@ -40,3 +40,4 @@ jobs:
         fail_ci_if_error: true
         # Specify whether the Codecov output should be verbose
         verbose: true
+        files: coverage/cobertura-coverage.xml
