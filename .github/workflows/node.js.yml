@@ -29,3 +29,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Codecov
+      # You may pin to the exact commit or the version.
+      # uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
+      uses: codecov/codecov-action@v3.1.1
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      with:
+        # Specify whether or not CI build should fail if Codecov runs into an error during upload
+        fail_ci_if_error: true
+        # Specify whether the Codecov output should be verbose
+        verbose: true
