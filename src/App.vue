@@ -1,8 +1,16 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/Index.vue'
+import { useRouter } from 'vue-router'
+
+    const router = useRouter()
 </script>
 
 <template>
+    <div id='nav'>
+      <router-link class="link" to='/'>Home </router-link> |
+      <router-link class="link" to='/add'>Add </router-link> |
+      <router-link class="link" to='/next'>Next</router-link>
+  </div>
   <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -11,7 +19,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <router-view />
 </template>
 
 <style scoped>

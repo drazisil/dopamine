@@ -6,33 +6,14 @@ let taskTitle = ref('')
 let taskBody = ref('')
 
 async function fetchCountDone() {
-  const result = await fetch('/api')
+  const result = await fetch('/api/next')
   const data = await result.json()
-  countDone = data.countDone
-  console.log(countDone)
+  countDone.value = data.countDone
+  taskTitle.value = data.task.title
+  taskBody.value = data.task.body
+  console.log(data.task)
 }
-
-async function addTask() {
-
-const formData = {
-  title: taskTitle.value,
-  body: taskBody.value
-}
-fetch('/api/add', {
-  method: 'post',
-  body: JSON.stringify(formData),
-  headers: {"Content-type": "application/json; charset=UTF-8"}
-})
-  .then((response) => response.json())
-  .then((result) => {
-    console.log('Success:', result);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-
-}
-
+ 
 onMounted(fetchCountDone )
 
 </script>
@@ -41,14 +22,12 @@ onMounted(fetchCountDone )
   <div class="card">
     <button type="button" @click="fetchCountDone">You have {{ countDone }} tasks done!</button>
     <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
+      View
     </p>
-    <form @submit.stop.prevent="addTask">
+    <div>
       <label>Task Title: <input v-model="taskTitle" placeholder="edit me" /></label><br>
       <label>Task Body: <input v-model="taskBody" placeholder="edit me" /></label><br>
-      <button type="submit">Save Task</button>
-    </form>
+    </div>
   </div>
 
   <p>
