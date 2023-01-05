@@ -2,17 +2,19 @@
 import { onMounted, ref, watchEffect } from 'vue'
 
 let countDone = ref(0)
-let taskId = ref('')
-let taskTitle = ref('')
-let taskBody = ref('')
+let task = ref({
+  id: '',
+  title: '',
+  body: ''
+})
 
 async function fetchCountDone() {
   const result = await fetch('/api/next')
   const data = await result.json()
   countDone.value = data.countDone
-  taskId.value = data.task.id
-  taskTitle.value = data.task.title
-  taskBody.value = data.task.body
+  task.value.id = data.task.id
+  task.value.title = data.task.title
+  task.value.body = data.task.body
   console.log(data.task)
 }
 
@@ -20,21 +22,23 @@ onMounted(fetchCountDone)
 
 async function doneTask() {
 
-  const formData = {
-    title: taskTitle.value,
-    body: taskBody.value
-  }
   fetch('/api/done', {
     method: 'post',
-    body: JSON.stringify(formData),
+    body: JSON.stringify(task.value),
     headers: { "Content-type": "application/json; charset=UTF-8" }
   })
     .then((response) => response.json())
     .then((result) => {
       countDone.value = result.countDone
-      taskId.value = ''
-      taskTitle.value = ''
-      taskBody.value = ''
+      if (typeof result.task !== "undefined") {
+        task.value = result.task
+      } else {
+        task.value = {
+          id: '',
+          title: '',
+          body: ''
+        }
+      }
       console.log('Success:', result);
     })
     .catch((error) => {
@@ -51,9 +55,9 @@ async function doneTask() {
     <p>
       View
     </p>
-    <div v-if="taskTitle !== ''">
-      <label>Task Title: <input v-model="taskTitle" placeholder="edit me" /></label><br>
-      <label>Task Body: <input v-model="taskBody" placeholder="edit me" /></label><br>
+    <div v-if="task.id !== ''">
+      <label>Task Title: <input v-model="task.title" placeholder="edit me" /></label><br>
+      <label>Task Body: <input v-model="task.body" placeholder="edit me" /></label><br>
       <button type="submit" @click.stop.prevent="doneTask">Done</button>
     </div>
     <div v-else>

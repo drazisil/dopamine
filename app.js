@@ -21,6 +21,7 @@ app.set('view engine', 'pug')
 app.get('/next', (req, res) => {
     try {
         const nextTask = req.app.taskList.getNextTask()
+        log.info(req.app.taskList.tasksToDo)
         res.json({ pageTitle: 'Task', message: 'Here you go!', task: nextTask, countDone: res.app.taskList.countOfDone() })        
     } catch (error) {
         if (error instanceof RangeError) {
@@ -38,7 +39,9 @@ app.post('/add', (req, res) => {
 
     try {
         req.app.taskList.addTask(newTask)
-        res.json({status: 'success', countDone: res.app.taskList.countOfDone()})        
+        log.info(req.app.taskList.tasksToDo)
+        
+        res.json({status: 'success',  countDone: res.app.taskList.countOfDone()})        
     } catch (error) {
         log.error(error)
         res.json({status: 'error', reason: String(error), countDone: res.app.taskList.countOfDone()})
@@ -56,7 +59,8 @@ app.post('/done', (req, res) => {
 
     try {
         req.app.taskList.markTaskDone(doneTask)
-        res.json({status: 'success', countDone: res.app.taskList.countOfDone()})        
+        const nextTask = req.app.taskList.getNextTask()
+        res.json({status: 'success', task: nextTask, countDone: res.app.taskList.countOfDone()})        
     } catch (error) {
         log.error(error)
         res.json({status: 'error', reason: String(error), countDone: res.app.taskList.countOfDone()})

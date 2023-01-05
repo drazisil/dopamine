@@ -25,6 +25,8 @@ async function addTask() {
   })
     .then((response) => response.json())
     .then((result) => {
+      taskTitle.value = ''
+      taskBody.value = ''
       console.log('Success:', result);
     })
     .catch((error) => {
