@@ -1,22 +1,54 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 
-defineProps({
-  msg: String,
+let countDone = ref(0)
+let taskTitle = ref('')
+let taskBody = ref('')
+
+async function fetchCountDone() {
+  const result = await fetch('/api')
+  const data = await result.json()
+  countDone = data.countDone
+  console.log(countDone)
+}
+
+async function addTask() {
+
+const formData = {
+  title: taskTitle.value,
+  body: taskBody.value
+}
+fetch('/api/add', {
+  method: 'post',
+  body: JSON.stringify(formData),
+  headers: {"Content-type": "application/json; charset=UTF-8"}
 })
+  .then((response) => response.json())
+  .then((result) => {
+    console.log('Success:', result);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 
-const count = ref(0)
+}
+
+onMounted(fetchCountDone )
+
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="fetchCountDone">You have {{ countDone }} tasks done!</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
     </p>
+    <form @submit.stop.prevent="addTask">
+      <label>Task Title: <input v-model="taskTitle" placeholder="edit me" /></label><br>
+      <label>Task Body: <input v-model="taskBody" placeholder="edit me" /></label><br>
+      <button type="submit">Save Task</button>
+    </form>
   </div>
 
   <p>
