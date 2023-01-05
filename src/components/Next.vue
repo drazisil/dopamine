@@ -2,6 +2,7 @@
 import { onMounted, ref, watchEffect } from 'vue'
 
 let countDone = ref(0)
+let taskId = ref('')
 let taskTitle = ref('')
 let taskBody = ref('')
 
@@ -9,12 +10,38 @@ async function fetchCountDone() {
   const result = await fetch('/api/next')
   const data = await result.json()
   countDone.value = data.countDone
+  taskId.value = data.task.id
   taskTitle.value = data.task.title
   taskBody.value = data.task.body
   console.log(data.task)
 }
- 
-onMounted(fetchCountDone )
+
+onMounted(fetchCountDone)
+
+async function doneTask() {
+
+  const formData = {
+    title: taskTitle.value,
+    body: taskBody.value
+  }
+  fetch('/api/done', {
+    method: 'post',
+    body: JSON.stringify(formData),
+    headers: { "Content-type": "application/json; charset=UTF-8" }
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      countDone.value = result.countDone
+      taskId.value = ''
+      taskTitle.value = ''
+      taskBody.value = ''
+      console.log('Success:', result);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+}
 
 </script>
 
@@ -24,17 +51,20 @@ onMounted(fetchCountDone )
     <p>
       View
     </p>
-    <div>
+    <div v-if="taskTitle !== ''">
       <label>Task Title: <input v-model="taskTitle" placeholder="edit me" /></label><br>
       <label>Task Body: <input v-model="taskBody" placeholder="edit me" /></label><br>
+      <button type="submit" @click.stop.prevent="doneTask">Done</button>
+    </div>
+    <div v-else>
+      <span>You should add one!</span>
     </div>
   </div>
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
+    starter
   </p>
   <p>
     Install

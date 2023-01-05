@@ -14,26 +14,26 @@ async function fetchCountDone() {
 
 async function addTask() {
 
-const formData = {
-  title: taskTitle.value,
-  body: taskBody.value
-}
-fetch('/api/add', {
-  method: 'post',
-  body: JSON.stringify(formData),
-  headers: {"Content-type": "application/json; charset=UTF-8"}
-})
-  .then((response) => response.json())
-  .then((result) => {
-    console.log('Success:', result);
+  const formData = {
+    title: taskTitle.value,
+    body: taskBody.value
+  }
+  fetch('/api/add', {
+    method: 'post',
+    body: JSON.stringify(formData),
+    headers: { "Content-type": "application/json; charset=UTF-8" }
   })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+    .then((response) => response.json())
+    .then((result) => {
+      console.log('Success:', result);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
 }
 
-onMounted(fetchCountDone )
+onMounted(fetchCountDone)
 
 </script>
 
@@ -52,9 +52,8 @@ onMounted(fetchCountDone )
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
+    starter
   </p>
   <p>
     Install

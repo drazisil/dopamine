@@ -47,6 +47,24 @@ app.post('/add', (req, res) => {
 
 })
 
+app.post('/done', (req, res) => {
+    /** @type {{id:string, title: string, body: string}} */
+    const doneTaskJson = req.body
+    log.info(doneTaskJson)
+
+    const doneTask = new Task((doneTaskJson))
+
+    try {
+        req.app.taskList.markTaskDone(doneTask)
+        res.json({status: 'success', countDone: res.app.taskList.countOfDone()})        
+    } catch (error) {
+        log.error(error)
+        res.json({status: 'error', reason: String(error), countDone: res.app.taskList.countOfDone()})
+    }
+
+
+})
+
 app.get('/', (req, res) => {
 
     res.json({countDone: res.app.taskList.countOfDone() })
