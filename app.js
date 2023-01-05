@@ -32,6 +32,7 @@ app.get('/next', (req, res) => {
 app.post('/add', (req, res) => {
     /** @type {{title: string, body: string}} */
     const newTaskJson = req.body
+    log.info(newTaskJson)
 
     const newTask = new Task((newTaskJson))
 
@@ -43,8 +44,7 @@ app.post('/add', (req, res) => {
         res.json({status: 'error', reason: String(error), countDone: res.app.taskList.countOfDone()})
     }
 
-    log.info(req.body)
-    res.json({})
+
 })
 
 app.get('/', (req, res) => {
