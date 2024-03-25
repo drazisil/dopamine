@@ -1,8 +1,7 @@
 import {describe, it} from 'mocha'
-import {expect} from 'chai'
+import { expect } from 'chai'
 import { TaskList } from '../src/TaskList.js'
 import { Task } from '../src/Task.js'
-import 'chai/register-should';
 
 
 describe('TaskList', function() {
