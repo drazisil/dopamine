@@ -1,9 +1,9 @@
 import {describe, it} from 'mocha'
-import * as chai, {expect} from 'chai'
+import {expect} from 'chai'
 import { TaskList } from '../src/TaskList.js'
 import { Task } from '../src/Task.js'
+import 'chai/register-should';
 
-chai.should()
 
 describe('TaskList', function() {
     it('should provide a count of items done when lower then 4', function() {
