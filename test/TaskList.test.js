@@ -1,5 +1,5 @@
 import {describe, it} from 'mocha'
-import chai, {expect} from 'chai'
+import * as chai, {expect} from 'chai'
 import { TaskList } from '../src/TaskList.js'
 import { Task } from '../src/Task.js'
 
