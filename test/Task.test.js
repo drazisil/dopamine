@@ -1,5 +1,5 @@
 import {describe, it} from 'mocha'
-import chai, {expect} from 'chai'
+import {expect} from 'chai'
 import { Task } from '../src/Task.js'
 
 describe('Task', function() {
