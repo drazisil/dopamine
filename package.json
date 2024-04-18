@@ -20,7 +20,7 @@
     "express": "4.19.2",
     "pug": "3.0.2",
     "vite": "5.2.9",
-    "vue-router": "4.3.0"
+    "vue-router": "4.3.2"
   },
   "devDependencies": {
     "@types/chai": "4.3.14",
