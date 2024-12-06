@@ -17,7 +17,7 @@
     "@vitejs/plugin-vue": "5.2.1",
     "bunyan": "1.8.15",
     "config": "3.3.12",
-    "express": "4.21.1",
+    "express": "4.21.2",
     "pug": "3.0.3",
     "vite": "6.0.2",
     "vue-router": "4.5.0"
