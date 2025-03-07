@@ -23,7 +23,7 @@
     "vue-router": "4.5.0"
   },
   "devDependencies": {
-    "@types/chai": "5.0.1",
+    "@types/chai": "5.2.0",
     "@types/express": "5.0.0",
     "@types/mocha": "10.0.10",
     "c8": "10.1.3",
