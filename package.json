@@ -16,7 +16,7 @@
   "dependencies": {
     "@vitejs/plugin-vue": "5.2.4",
     "bunyan": "1.8.15",
-    "config": "4.2.0",
+    "config": "4.2.1",
     "express": "5.2.1",
     "pug": "3.0.3",
     "vite": "6.4.1",
